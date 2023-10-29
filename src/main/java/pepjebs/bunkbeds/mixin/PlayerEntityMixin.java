@@ -1,5 +1,7 @@
 package pepjebs.bunkbeds.mixin;
 
+import net.minecraft.block.BedBlock;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -33,7 +35,11 @@ public class PlayerEntityMixin {
         if (spawns == null || spawns.isEmpty()){
             cir.setReturnValue(Optional.empty());
         } else {
-            cir.setReturnValue(Optional.of(spawns.get(0).toCenterPos()));
+            var newPos = spawns.get(0);
+            var blockState = world.getBlockState(newPos);
+            var wakeUp = BedBlock.findWakeUpPosition(
+                    EntityType.PLAYER, world, newPos, blockState.get(BedBlock.FACING), angle);
+            cir.setReturnValue(wakeUp);
         }
     }
 }
