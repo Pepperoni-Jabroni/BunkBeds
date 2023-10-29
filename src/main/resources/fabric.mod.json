@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "bunk_beds",
+  "version": "${version}",
+
+  "name": "Bunk Beds",
+  "description": "Makes bed spawns stack instead of reset",
+  "authors": [
+    "Pepperoni__Jabroni__"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": "",
+    "issues": ""
+  },
+
+  "license": "GPL-3.0",
+
+  "environment": "*",
+  "entrypoints": {
+    "cardinal-components": ["pepjebs.bunkbeds.SpawnStackingComponent"]
+  },
+  "mixins": [
+    "bunkbeds.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "fabric": "*",
+    "minecraft": "~1.20",
+    "java": ">=17"
+  },
+  "custom": {
+    "cardinal-components": [
+      "bunk_beds:player_beds"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        jcenter()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'Mod Menu Api'
+            url = 'https://maven.terraformersmc.com/releases/com/terraformersmc/modmenu/'
+        }
+        maven {
+            name = 'Cloth Config Api'
+            url = 'https://maven.shedaniel.me/'
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}

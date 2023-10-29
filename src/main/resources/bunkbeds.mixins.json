@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "pepjebs.bunkbeds.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "PlayerEntityMixin",
+    "ServerPlayerEntityMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
