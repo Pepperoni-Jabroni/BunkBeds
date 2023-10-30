@@ -18,6 +18,8 @@
 
   "environment": "*",
   "entrypoints": {
+    "main": ["pepjebs.bunkbeds.BunkBedsMod"],
+    "modmenu": ["pepjebs.bunkbeds.config.BunkBedsModMenuApiImpl"],
     "cardinal-components": ["pepjebs.bunkbeds.SpawnStackingComponent"]
   },
   "mixins": [

@@ -8,8 +8,11 @@ import net.minecraft.block.BedBlock;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SpawnStackingComponent implements AutoSyncedComponent, ComponentV3, WorldComponentInitializer {
 
@@ -26,7 +29,7 @@ public class SpawnStackingComponent implements AutoSyncedComponent, ComponentV3,
                 String[] entries = entry.split("::");
                 String dim = entries[0];
                 var coords = Arrays.stream(entries[1].split(",")).map(Integer::parseInt).toList();
-                pushPlayerSpawnPos(name, new BlockPos(coords.get(0), coords.get(1), coords.get(2)));
+                pushPlayerSpawnPos(null, name, new BlockPos(coords.get(0), coords.get(1), coords.get(2)));
             }
         }
     }
@@ -57,25 +60,25 @@ public class SpawnStackingComponent implements AutoSyncedComponent, ComponentV3,
 
     public void popPlayerSpawnPos(ServerWorld world, String playerName) {
         if (!bedSpawns.containsKey(playerName)) return;
-        var dup = bedSpawns.get(playerName);
-        boolean shouldRemove = true;
-        while(dup.size() > 0 && shouldRemove) {
-            var firstPos = dup.get(0);
-            var block = world.getBlockState(firstPos).getBlock();
-            if (block instanceof BedBlock && BedBlock.isBedWorking(world)) {
-                shouldRemove = false;
-            } else {
-                dup.remove(0);
-            }
-        }
-        bedSpawns.put(playerName, dup);
+        bedSpawns.put(playerName, pruneBedPositions(world, bedSpawns.get(playerName)));
     }
 
-    public void pushPlayerSpawnPos(String playerName, BlockPos globalPos) {
+    public void pushPlayerSpawnPos(@Nullable World world, String playerName, BlockPos globalPos) {
         var existing = bedSpawns.get(playerName);
         if (existing == null) existing = new ArrayList<>();
         existing.remove(globalPos);
+        if (world != null) existing = pruneBedPositions(world, existing);
+        if (existing.size() >= BunkBedsMod.MAX_BED_STACK) {
+            existing.remove(existing.size() - 1);
+        }
         existing.add(0, globalPos);
         bedSpawns.put(playerName, new ArrayList<>(existing));
+    }
+
+    private List<BlockPos> pruneBedPositions(World world, List<BlockPos> positions) {
+        return positions.stream().filter(p -> {
+            var block = world.getBlockState(p).getBlock();
+            return block instanceof BedBlock && BedBlock.isBedWorking(world);
+        }).collect(Collectors.toCollection(ArrayList::new));
     }
 }
