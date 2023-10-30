@@ -1,0 +1,5 @@
+{
+  "text.autoconfig.bunk_beds.title": "Bunk Beds Settings",
+  "text.autoconfig.bunk_beds.option.maxBunkBedStackSize": "Max Bunk Bed Stack Size",
+  "text.autoconfig.bunk_beds.option.maxBunkBedStackSize.@Tooltip": "The max number of beds to be kept in the respawn stack"
+}
