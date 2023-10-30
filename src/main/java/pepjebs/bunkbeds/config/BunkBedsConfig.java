@@ -11,6 +11,6 @@ public class BunkBedsConfig implements ConfigData {
 
     @ConfigEntry.Gui.Tooltip()
     @Comment("The max number of beds to be kept in the respawn stack")
-    public int maxBunkBedStackSize = 5;
+    public int maxBunkBedStackSize = BunkBedsMod.DEFAULT_MAX_BED_STACK;
 
 }
