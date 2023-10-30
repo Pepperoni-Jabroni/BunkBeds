@@ -68,7 +68,8 @@ public class SpawnStackingComponent implements AutoSyncedComponent, ComponentV3,
         if (existing == null) existing = new ArrayList<>();
         existing.remove(globalPos);
         if (world != null) existing = pruneBedPositions(world, existing);
-        if (existing.size() >= BunkBedsMod.MAX_BED_STACK) {
+        if (existing.size() >= (BunkBedsMod.CONFIG == null
+                ? BunkBedsMod.DEFAULT_MAX_BED_STACK : BunkBedsMod.CONFIG.maxBunkBedStackSize)) {
             existing.remove(existing.size() - 1);
         }
         existing.add(0, globalPos);

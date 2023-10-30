@@ -22,14 +22,13 @@ public class BunkBedsMod implements ModInitializer {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
     public static final ThreadLocal<Entity> PLAYER = new ThreadLocal<>();
     public static BunkBedsConfig CONFIG = null;
-    public static int MAX_BED_STACK = 5;
+    public static int DEFAULT_MAX_BED_STACK = 5;
 
     @Override
     public void onInitialize() {
         if(FabricLoader.getInstance().isModLoaded("cloth-config")) {
             AutoConfig.register(BunkBedsConfig.class, JanksonConfigSerializer::new);
             CONFIG = AutoConfig.getConfigHolder(BunkBedsConfig.class).getConfig();
-            MAX_BED_STACK = CONFIG.maxBunkBedStackSize;
         }
     }
 }
