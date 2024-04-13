@@ -38,7 +38,7 @@ abstract public class ServerPlayerEntityMixin extends Entity {
             boolean sendMessage,
             CallbackInfo ci) {
         if (pos != null && this.spawnPointDimension == World.OVERWORLD && !forced) {
-            var playerName = this.getEntityName();
+            var playerName = this.getName().getString();
             BunkBedsMod.PLAYER_BEDS_KEY.get(this.getWorld()).pushPlayerSpawnPos(this.getWorld(), playerName, pos);
         }
     }

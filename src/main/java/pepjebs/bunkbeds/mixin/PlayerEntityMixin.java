@@ -29,7 +29,7 @@ public class PlayerEntityMixin {
             ServerWorld world, BlockPos pos, float angle, boolean forced, boolean alive,
             CallbackInfoReturnable<Optional<Vec3d>> cir
     ) {
-        var playerName = BunkBedsMod.PLAYER.get().getEntityName();
+        var playerName = BunkBedsMod.PLAYER.get().getName().getString();
         BunkBedsMod.PLAYER_BEDS_KEY.get(world).popPlayerSpawnPos(world, playerName);
         var spawns = BunkBedsMod.PLAYER_BEDS_KEY.get(world).playerSpawns(playerName);
         if (spawns == null || spawns.isEmpty()){

@@ -24,12 +24,14 @@ public class SpawnStackingComponent implements AutoSyncedComponent, ComponentV3,
         for (int i = 0; i < size; i++) {
             String name = tag.getString("name_" + i);
             int elemSize = tag.getInt("size_" + i);
+            bedSpawns.remove(name);
+            bedSpawns.put(name, new ArrayList<>());
             for (int j  = 0; j < elemSize; j++) {
                 String entry = tag.getString(i + "_elem_" + j);
                 String[] entries = entry.split("::");
                 String dim = entries[0];
                 var coords = Arrays.stream(entries[1].split(",")).map(Integer::parseInt).toList();
-                pushPlayerSpawnPos(null, name, new BlockPos(coords.get(0), coords.get(1), coords.get(2)));
+                bedSpawns.get(name).add(new BlockPos(coords.get(0), coords.get(1), coords.get(2)));
             }
         }
     }
