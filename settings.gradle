@@ -1,6 +1,10 @@
 pluginManagement {
     repositories {
-        jcenter()
+//        jcenter()
+        maven {
+            name = "Ladysnake Mods"
+            url = 'https://maven.ladysnake.org/releases'
+        }
         maven {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
