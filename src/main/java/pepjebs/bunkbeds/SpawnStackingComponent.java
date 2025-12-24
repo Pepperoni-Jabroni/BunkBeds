@@ -20,6 +20,11 @@ public class SpawnStackingComponent implements AutoSyncedComponent, ComponentV3,
     private static final HashMap<String, List<BlockPos>> bedSpawns = new HashMap<>();
 
     @Override
+    public boolean isRequiredOnClient() {
+        return false;
+    }
+
+    @Override
     public void readData(ReadView readView) {
         int size = readView.getInt("size", 0);
         for (int i = 0; i < size; i++) {
