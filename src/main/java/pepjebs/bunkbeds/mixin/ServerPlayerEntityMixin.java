@@ -50,7 +50,7 @@ abstract public class ServerPlayerEntityMixin extends Entity {
         }
     }
 
-    @Inject(method = "getRespawnTarget", at = @At("RETURN"))
+    @Inject(method = "getRespawnTarget", at = @At("HEAD"))
     private void injectAtRespawnTarget(
             boolean alive,
             TeleportTarget.PostDimensionTransition postDimensionTransition,
@@ -76,20 +76,19 @@ abstract public class ServerPlayerEntityMixin extends Entity {
         var spawns = BunkBedsMod.PLAYER_BEDS_KEY.get(world).playerSpawns(playerName);
         BunkBedsMod.LOGGER.info(spawns);
         if (spawns == null || spawns.isEmpty()){
-            cir.setReturnValue(Optional.empty());
-        } else {
-            var newPos = spawns.get(0);
-            var blockState = world.getBlockState(newPos);
-            var wakeUp = BedBlock.findWakeUpPosition(
-                    EntityType.PLAYER, world, newPos, blockState.get(BedBlock.FACING), respawn.respawnData().pitch());
-            if (wakeUp.isEmpty()) {
-                return;
-            }
-            cir.setReturnValue(Optional.of(new ServerPlayerEntity.RespawnPos(
-                    wakeUp.get(),
-                    respawn.respawnData().yaw(),
-                    respawn.respawnData().pitch()
-            )));
+            return;
         }
+        var newPos = spawns.get(0);
+        var blockState = world.getBlockState(newPos);
+        var wakeUp = BedBlock.findWakeUpPosition(
+                EntityType.PLAYER, world, newPos, blockState.get(BedBlock.FACING), respawn.respawnData().pitch());
+        if (wakeUp.isEmpty()) {
+            return;
+        }
+        cir.setReturnValue(Optional.of(new ServerPlayerEntity.RespawnPos(
+                wakeUp.get(),
+                respawn.respawnData().yaw(),
+                respawn.respawnData().pitch()
+        )));
     }
 }
